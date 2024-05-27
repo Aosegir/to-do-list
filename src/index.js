@@ -1,23 +1,12 @@
+/*
+    This index.js page focuses on loading the information to be displayed to the user.
+*/
+
 import './style.css';
+import { addNavGroup } from './nav.js';
+import { loadTaskMaker, createTask } from './tasks.js';
 
 const main = document.getElementById('main');
-
-
-/*
-    Create nav content function
-*/
-function addNavGroup(name, nav) {
-    let group = document.createElement('h4');
-    group.classList.add('nav-content');
-    group.innerText = name;
-
-    group.addEventListener('click', () => {
-        // This event listener will filter the tasks by their appropriate grouping
-        console.log(`The name of this group is ${name}`);
-    });
-
-    nav.appendChild(group);
-}
 
 /*
     Single Responsibility - instead of loading the entire page, load the nav independent
@@ -33,9 +22,7 @@ function navLoader() {
         'single', 'border');
 
     addNavGroup('Today', navDiv);
-    addNavGroup('Tomorrow', navDiv);
-    addNavGroup('This Week', navDiv);
-    addNavGroup('This Month', navDiv);
+    addNavGroup('Week', navDiv);
 
     return navDiv;
 }
@@ -59,8 +46,8 @@ function contentLoader() {
     let addTaskButton = document.createElement('button');
     addTaskButton.innerText = "Add Task";
     addTaskButton.addEventListener('click', () => {
-        //This event listener will be used to add tasks
-        console.log("The add task button works!");
+        let taskForm = loadTaskMaker();
+        main.appendChild(taskForm);
     });
     footerDiv.appendChild(addTaskButton);
 
