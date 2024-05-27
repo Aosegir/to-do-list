@@ -1,0 +1,43 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    background: peachpuff;
+}
+
+.border {
+    border: 1px solid maroon;
+}
+
+#main {
+    height: 100vh;
+    width: 100vw;
+}
+
+.height {
+    height: 100vh;
+}
+
+.width {
+    width: 100vw;
+}
+
+/*
+    FLEX
+*/
+
+.flex {
+    display: flex;
+}
+
+.column {
+    flex-direction: column;
+}
+
+.single {
+    flex: 1;
+}
+
+.double {
+    flex: 2;
+}
