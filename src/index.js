@@ -4,7 +4,7 @@
 
 import './style.css';
 import { addNavGroup } from './nav.js';
-import { loadTaskMaker } from './tasks.js';
+import { createTask, loadTaskMaker, Tasks } from './tasks.js';
 
 const main = document.getElementById('main');
 homePageLoader();
@@ -30,18 +30,26 @@ function navLoader() {
     let time = document.createElement('div');
     time.classList.add('flex', 'column', 'center-content',
     'double', 'height', 'width', 'border');
+    time.id = "time";
     addNavGroup('Today', time);
     addNavGroup('Week', time);
 
     let priority = document.createElement('div');
     priority.classList.add('flex', 'column', 'center-content',
     'double', 'height', 'width', 'border');
+    priority.id = "priority";
     addNavGroup('Low', priority);
     addNavGroup('Urgent', priority);
+
+    let project = document.createElement('div');
+    project.classList.add('flex', 'column', 'center-content',
+    'double', 'height', 'width', 'border');
+    project.id = "project";
 
     navDiv.appendChild(home);
     navDiv.appendChild(time);
     navDiv.appendChild(priority);
+    navDiv.appendChild(project);
     return navDiv;
 }
 
@@ -92,8 +100,32 @@ function homePageLoader() {
 */
 function taskLoader(newTask) {
     let taskContent = document.getElementById('task-content');
-    console.log(taskContent);
     taskContent.appendChild(newTask);
 };
 
-export { taskLoader };
+/*
+    Task Display
+*/
+function displayTasks(keyword, filter) {
+    let taskContent = document.getElementById('task-content');
+    while(taskContent.lastChild) {
+        taskContent.removeChild(taskContent.lastChild);
+    };
+
+    if(!filter) {
+        for(let task of Tasks) {
+            createTask(task);
+        };
+        return;
+    };
+
+    for(let task of Tasks) {
+        if(task[filter].toLowerCase() == keyword.toLowerCase()) {
+            createTask(task);
+        };
+    };
+    // look through array of tasks
+    // call taskLoader with the appropriate tasks for the current filter
+};
+
+export { taskLoader, displayTasks };

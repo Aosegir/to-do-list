@@ -2,24 +2,8 @@
     This js page will handle all code related to the creation and management of Tasks.
 */
 
+const Tasks = [];
 import { taskLoader } from './index.js';
-
-function createTask(array) {
-    let newTask = document.createElement('div');
-    array.forEach((input) => {
-        if(input.value) {
-            let taskItem = document.createElement('p');
-            taskItem.innerText = input.value;
-            newTask.appendChild(taskItem);
-            console.log(input.value);
-        };
-    });
-    taskLoader(newTask);
-};
-
-function removeTaskForm() {
-    main.removeChild(main.lastChild);
-};
 
 function loadTaskMaker() {
     let taskForm = document.createElement('form');
@@ -28,15 +12,18 @@ function loadTaskMaker() {
 
     taskForm.appendChild(formItemMaker('title', 'text'));
     taskForm.appendChild(formItemMaker('description', 'input'));
-    taskForm.appendChild(formItemMaker('due', 'date'));
+    taskForm.appendChild(formItemMaker('time', 'date'));
     taskForm.appendChild(formItemMaker('priority', 'text'));
+    taskForm.appendChild(formItemMaker('project', 'text'));
 
     let submitButton = document.createElement('button');
     submitButton.innerText = "Submit";
     taskForm.appendChild(submitButton);
     submitButton.addEventListener('click', () => {
         event.preventDefault();
-        createTask(Array.from(taskForm));
+        let task = transformTaskData(Array.from(taskForm));
+        addTaskToArray(task);
+        createTask(task);
         removeTaskForm();
     });
 
@@ -60,4 +47,33 @@ function formItemMaker(property, type) {
     return contentDiv;
 }
 
-export { loadTaskMaker };
+function createTask(taskObj) {
+    let newTask = document.createElement('div');
+    for(const [key, value] of Object.entries(taskObj)) {
+        let item = document.createElement('p');
+        item.innerText = `${key}: ${value}`;
+        newTask.appendChild(item);
+    };
+    taskLoader(newTask);
+};
+
+function removeTaskForm() {
+    main.removeChild(main.lastChild);
+};
+
+function transformTaskData(array) {
+    let task = {};
+    array.forEach((input) => {
+        if(input.value) {
+            let item = input.id;
+            task[item] = input.value;
+        };
+    });
+    return task;
+};
+
+function addTaskToArray(taskObj) {
+    Tasks.push(taskObj);
+}
+
+export { createTask, loadTaskMaker, Tasks };

@@ -6,14 +6,16 @@
 /*
     Create nav content function
 */
+
+import { displayTasks } from './index.js';
+
 function addNavGroup(name, nav) {
     let group = document.createElement('h4');
     group.classList.add('nav-content');
     group.innerText = name;
 
     group.addEventListener('click', () => {
-        // This event listener will filter the tasks by their appropriate grouping
-        console.log(`The name of this group is ${name}`);
+        displayTasks(name, group.parentElement.id);
     });
 
     nav.appendChild(group);
