@@ -15,11 +15,11 @@
 }
 
 .height {
-    height: 100vh;
+    height: 100%;
 }
 
 .width {
-    width: 100vw;
+    width: 100%;
 }
 
 .invisible {

@@ -4,9 +4,10 @@
 
 import './style.css';
 import { addNavGroup } from './nav.js';
-import { loadTaskMaker, createTask } from './tasks.js';
+import { loadTaskMaker } from './tasks.js';
 
 const main = document.getElementById('main');
+homePageLoader();
 
 /*
     Single Responsibility - instead of loading the entire page, load the nav independent
@@ -19,11 +20,28 @@ const main = document.getElementById('main');
 function navLoader() {
     let navDiv = document.createElement('div');
     navDiv.classList.add('flex', 'column', 'center-content',
-        'single', 'border');
+    'single', 'height', 'width', 'border');
 
-    addNavGroup('Today', navDiv);
-    addNavGroup('Week', navDiv);
+    let home = document.createElement('div');
+    home.classList.add('flex', 'column', 'center-content',
+    'single', 'height', 'width', 'border');
+    addNavGroup('Home', home);
 
+    let time = document.createElement('div');
+    time.classList.add('flex', 'column', 'center-content',
+    'double', 'height', 'width', 'border');
+    addNavGroup('Today', time);
+    addNavGroup('Week', time);
+
+    let priority = document.createElement('div');
+    priority.classList.add('flex', 'column', 'center-content',
+    'double', 'height', 'width', 'border');
+    addNavGroup('Low', priority);
+    addNavGroup('Urgent', priority);
+
+    navDiv.appendChild(home);
+    navDiv.appendChild(time);
+    navDiv.appendChild(priority);
     return navDiv;
 }
 
@@ -35,7 +53,8 @@ function contentLoader() {
     wrapperDiv.classList.add('flex', 'column', 'double', 'border');
 
     let contentDiv = document.createElement('div');
-    contentDiv.classList.add('flex', 'height', 'border');
+    contentDiv.classList.add('flex', 'column', 'height', 'border');
+    contentDiv.id = "task-content";
     wrapperDiv.appendChild(contentDiv);
 
     let footerDiv = document.createElement('div');
@@ -68,4 +87,13 @@ function homePageLoader() {
     main.appendChild(contentDiv);
 };
 
-homePageLoader();
+/*
+    Task Loader
+*/
+function taskLoader(newTask) {
+    let taskContent = document.getElementById('task-content');
+    console.log(taskContent);
+    taskContent.appendChild(newTask);
+};
+
+export { taskLoader };
