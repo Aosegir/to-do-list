@@ -112,6 +112,7 @@ function displayTasks(keyword, filter) {
         taskContent.removeChild(taskContent.lastChild);
     };
 
+    // edge case: this is for the home button, which has no id on the parent div
     if(!filter) {
         for(let task of Tasks) {
             createTask(task);
@@ -124,8 +125,13 @@ function displayTasks(keyword, filter) {
             createTask(task);
         };
     };
-    // look through array of tasks
-    // call taskLoader with the appropriate tasks for the current filter
 };
 
 export { taskLoader, displayTasks };
+
+/*
+    THINGS LEFT
+        ADD DELETE BUTTON TO EACH TASK
+        ALLOW FOR TASKS TO MAKE PROJECTS TO FILTER BY
+        UPDATE CSS?
+*/

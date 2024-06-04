@@ -2,8 +2,10 @@
     This js page will handle all code related to the creation and management of Tasks.
 */
 
-const Tasks = [];
-import { taskLoader } from './index.js';
+let Tasks = [];
+let TaskID = 0;
+
+import { displayTasks, taskLoader } from './index.js';
 
 function loadTaskMaker() {
     let taskForm = document.createElement('form');
@@ -22,8 +24,8 @@ function loadTaskMaker() {
     submitButton.addEventListener('click', () => {
         event.preventDefault();
         let task = transformTaskData(Array.from(taskForm));
-        addTaskToArray(task);
         createTask(task);
+        addTaskToArray(task);
         removeTaskForm();
     });
 
@@ -54,6 +56,22 @@ function createTask(taskObj) {
         item.innerText = `${key}: ${value}`;
         newTask.appendChild(item);
     };
+    let deleteButton = document.createElement('button');
+    deleteButton.id = 'delete';
+    deleteButton.task_id = TaskID;
+    deleteButton.innerText = "Delete Task";
+    deleteButton.addEventListener('click', () => {
+        console.log(deleteButton.parentElement);
+        for(let i = 0; i < Tasks.length; i++) {
+            console.log(Tasks[i].task_id);
+            console.log(deleteButton.task_id);
+            if (Tasks[i].task_id == deleteButton.task_id) {
+                Tasks.splice(i, 1);
+                displayTasks();
+            };
+        };
+    });
+    newTask.appendChild(deleteButton);
     taskLoader(newTask);
 };
 
@@ -73,6 +91,8 @@ function transformTaskData(array) {
 };
 
 function addTaskToArray(taskObj) {
+    taskObj.task_id = TaskID;
+    TaskID++;
     Tasks.push(taskObj);
 }
 
